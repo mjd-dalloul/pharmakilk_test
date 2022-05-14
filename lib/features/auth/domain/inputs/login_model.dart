@@ -12,4 +12,8 @@ class LoginModel extends BaseParams with _$LoginModel {
     required String password,
   }) = _LoginModel;
 
+  factory LoginModel.empty() => const LoginModel(
+        email: '',
+        password: '',
+      );
 }

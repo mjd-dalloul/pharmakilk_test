@@ -14,4 +14,10 @@ class RegisterModel extends BaseParams with _$RegisterModel {
     required String email,
   }) = _RegisterModel;
 
+  factory RegisterModel.empty() => const RegisterModel(
+        firstName: '',
+        lastName: '',
+        password: '',
+        email: '',
+      );
 }
