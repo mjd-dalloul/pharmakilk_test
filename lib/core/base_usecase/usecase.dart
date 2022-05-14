@@ -6,7 +6,9 @@ abstract class UseCase<Type, Params extends BaseParams> {
   const UseCase();
 }
 
-abstract class BaseParams {}
+abstract class BaseParams {
+  const BaseParams();
+}
 
 class NoParams extends BaseParams {
   // no need to create a new object every time we call a use case with NoParams,
