@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:pharmaklik/core/validator/base_validator.dart';
 import 'package:pharmaklik/features/auth/domain/inputs/login_model.dart';
 import 'package:pharmaklik/features/auth/domain/usecase/login.dart';
 

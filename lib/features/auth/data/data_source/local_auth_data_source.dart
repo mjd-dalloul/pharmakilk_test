@@ -1,8 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:pharmaklik/core/constant/app_constant.dart';
 import 'package:pharmaklik/core/database/dao/user_dao.dart';
 import 'package:pharmaklik/core/database/entities/user_table.dart';
-import 'package:pharmaklik/core/helpers/shared_preferences_helper.dart';
 import 'package:pharmaklik/features/auth/data/data_source/i_auth_data_source.dart';
 import 'package:pharmaklik/features/auth/domain/inputs/login_model.dart';
 import 'package:pharmaklik/features/auth/domain/inputs/register_model.dart';

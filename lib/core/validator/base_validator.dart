@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:dartz/dartz_unsafe.dart';
 import 'package:pharmaklik/core/validator/validation_exception.dart';
 
 abstract class IBusinessRule<Input> {

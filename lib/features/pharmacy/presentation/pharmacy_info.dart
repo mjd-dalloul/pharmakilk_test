@@ -80,39 +80,45 @@ class PharmacyInfo extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
-            height: 200,
-            child: FlutterMap(
-              options: MapOptions(
-                allowPanningOnScrollingParent: false,
-                allowPanning: false,
-                enableScrollWheel: false,
-                enableMultiFingerGestureRace: false,
-                center: LatLng(
-                  data.lat,
-                  data.lng,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Card(
+              child: SizedBox(
+                height: 200,
+                child: FlutterMap(
+                  options: MapOptions(
+                    allowPanningOnScrollingParent: false,
+                    allowPanning: false,
+                    enableScrollWheel: false,
+                    enableMultiFingerGestureRace: false,
+                    center: LatLng(
+                      data.lat,
+                      data.lng,
+                    ),
+                    zoom: 15.0,
+                  ),
+                  layers: [
+                    TileLayerOptions(
+                        urlTemplate:
+                        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                        subdomains: ['a', 'b', 'c']),
+                    MarkerLayerOptions(markers: [
+                      Marker(
+                          point: LatLng(
+                            data.lat,
+                            data.lng,
+                          ),
+                          builder: (_) => const Icon(
+                            Icons.location_on,
+                            color: Colors.red,
+                          ))
+                    ])
+                  ],
                 ),
-                zoom: 15.0,
               ),
-              layers: [
-                TileLayerOptions(
-                    urlTemplate:
-                    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                    subdomains: ['a', 'b', 'c']),
-                MarkerLayerOptions(markers: [
-                  Marker(
-                      point: LatLng(
-                        data.lat,
-                        data.lng,
-                      ),
-                      builder: (_) => const Icon(
-                        Icons.location_on,
-                        color: Colors.red,
-                      ))
-                ])
-              ],
             ),
           ),
+          const SizedBox(height: 30.0,)
         ],
       ),
     );
