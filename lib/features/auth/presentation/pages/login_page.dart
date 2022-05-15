@@ -2,6 +2,7 @@ import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharmaklik/core/app/app_bloc/app_bloc.dart';
 import 'package:pharmaklik/core/helpers/failrue_resolver.dart';
 import 'package:pharmaklik/features/auth/presentation/login_bloc/login_bloc.dart';
 import 'package:pharmaklik/features/auth/presentation/pages/signup_page.dart';
@@ -32,8 +33,9 @@ class LoginPage extends StatelessWidget {
           (failureOrSuccess) => failureOrSuccess.fold(
                   (failure) => FailureResolver.resolveFailure(
                       failure: failure, context: context), (_) {
-                FlushbarHelper.createSuccess(message: 'Welcome back !')
-                    .show(context);
+                context
+                    .read<AppBloc>()
+                    .add(const AppEvent.authenticateCheckRequested());
               })),
       child: Scaffold(
         body: GestureDetector(

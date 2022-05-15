@@ -13,7 +13,7 @@ class AppProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AppBloc>(
-      create: (_) => sl<AppBloc>()..add(const AppEvent.initialEvent()),
+      create: (_) => sl<AppBloc>()..add(const AppEvent.authenticateCheckRequested()),
       child: const MyApp(),
     );
   }

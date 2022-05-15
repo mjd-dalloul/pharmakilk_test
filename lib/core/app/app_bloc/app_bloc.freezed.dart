@@ -18,33 +18,36 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AppEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initialEvent,
+    required TResult Function() authenticateCheckRequested,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialEvent,
+    TResult Function()? authenticateCheckRequested,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initialEvent,
+    TResult Function()? authenticateCheckRequested,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(InitialEvent value) initialEvent,
+    required TResult Function(AuthenticateCheckRequested value)
+        authenticateCheckRequested,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(InitialEvent value)? initialEvent,
+    TResult Function(AuthenticateCheckRequested value)?
+        authenticateCheckRequested,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(InitialEvent value)? initialEvent,
+    TResult Function(AuthenticateCheckRequested value)?
+        authenticateCheckRequested,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -66,37 +69,42 @@ class _$AppEventCopyWithImpl<$Res> implements $AppEventCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$$InitialEventCopyWith<$Res> {
-  factory _$$InitialEventCopyWith(
-          _$InitialEvent value, $Res Function(_$InitialEvent) then) =
-      __$$InitialEventCopyWithImpl<$Res>;
+abstract class _$$AuthenticateCheckRequestedCopyWith<$Res> {
+  factory _$$AuthenticateCheckRequestedCopyWith(
+          _$AuthenticateCheckRequested value,
+          $Res Function(_$AuthenticateCheckRequested) then) =
+      __$$AuthenticateCheckRequestedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$InitialEventCopyWithImpl<$Res> extends _$AppEventCopyWithImpl<$Res>
-    implements _$$InitialEventCopyWith<$Res> {
-  __$$InitialEventCopyWithImpl(
-      _$InitialEvent _value, $Res Function(_$InitialEvent) _then)
-      : super(_value, (v) => _then(v as _$InitialEvent));
+class __$$AuthenticateCheckRequestedCopyWithImpl<$Res>
+    extends _$AppEventCopyWithImpl<$Res>
+    implements _$$AuthenticateCheckRequestedCopyWith<$Res> {
+  __$$AuthenticateCheckRequestedCopyWithImpl(
+      _$AuthenticateCheckRequested _value,
+      $Res Function(_$AuthenticateCheckRequested) _then)
+      : super(_value, (v) => _then(v as _$AuthenticateCheckRequested));
 
   @override
-  _$InitialEvent get _value => super._value as _$InitialEvent;
+  _$AuthenticateCheckRequested get _value =>
+      super._value as _$AuthenticateCheckRequested;
 }
 
 /// @nodoc
 
-class _$InitialEvent implements InitialEvent {
-  const _$InitialEvent();
+class _$AuthenticateCheckRequested implements AuthenticateCheckRequested {
+  const _$AuthenticateCheckRequested();
 
   @override
   String toString() {
-    return 'AppEvent.initialEvent()';
+    return 'AppEvent.authenticateCheckRequested()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InitialEvent);
+        (other.runtimeType == runtimeType &&
+            other is _$AuthenticateCheckRequested);
   }
 
   @override
@@ -105,27 +113,27 @@ class _$InitialEvent implements InitialEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initialEvent,
+    required TResult Function() authenticateCheckRequested,
   }) {
-    return initialEvent();
+    return authenticateCheckRequested();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialEvent,
+    TResult Function()? authenticateCheckRequested,
   }) {
-    return initialEvent?.call();
+    return authenticateCheckRequested?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initialEvent,
+    TResult Function()? authenticateCheckRequested,
     required TResult orElse(),
   }) {
-    if (initialEvent != null) {
-      return initialEvent();
+    if (authenticateCheckRequested != null) {
+      return authenticateCheckRequested();
     }
     return orElse();
   }
@@ -133,34 +141,37 @@ class _$InitialEvent implements InitialEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(InitialEvent value) initialEvent,
+    required TResult Function(AuthenticateCheckRequested value)
+        authenticateCheckRequested,
   }) {
-    return initialEvent(this);
+    return authenticateCheckRequested(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(InitialEvent value)? initialEvent,
+    TResult Function(AuthenticateCheckRequested value)?
+        authenticateCheckRequested,
   }) {
-    return initialEvent?.call(this);
+    return authenticateCheckRequested?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(InitialEvent value)? initialEvent,
+    TResult Function(AuthenticateCheckRequested value)?
+        authenticateCheckRequested,
     required TResult orElse(),
   }) {
-    if (initialEvent != null) {
-      return initialEvent(this);
+    if (authenticateCheckRequested != null) {
+      return authenticateCheckRequested(this);
     }
     return orElse();
   }
 }
 
-abstract class InitialEvent implements AppEvent {
-  const factory InitialEvent() = _$InitialEvent;
+abstract class AuthenticateCheckRequested implements AppEvent {
+  const factory AuthenticateCheckRequested() = _$AuthenticateCheckRequested;
 }
 
 /// @nodoc
