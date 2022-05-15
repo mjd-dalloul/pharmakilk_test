@@ -27,7 +27,6 @@ class SignupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log(context.read<RegisterBloc>().toString());
     return BlocListener<RegisterBloc, RegisterState>(
       listener: (context, state) {
         state.optionOfFailureOrSuccess.fold(
@@ -65,22 +64,22 @@ class SignupPage extends StatelessWidget {
               SizedBox(
                 height: MediaQuery.of(context).size.height * .12,
               ),
-              Hero(
-                tag: 'AuthButton',
-                child: BlocBuilder<RegisterBloc, RegisterState>(
-                  builder: (context, state) {
-                    return state.isLoading
-                        ? const Center(
-                            child: CupertinoActivityIndicator(),
-                          )
-                        : ElevatedButton(
+              BlocBuilder<RegisterBloc, RegisterState>(
+                builder: (context, state) {
+                  return state.isLoading
+                      ? const Center(
+                          child: CupertinoActivityIndicator(),
+                        )
+                      : Hero(
+                    tag: 'AuthButton',
+                        child: ElevatedButton(
                             onPressed: () => context.read<RegisterBloc>().add(
                                   const RegisterEvent.registerUserRequested(),
                                 ),
                             child: const Text('Sign up'),
-                          );
-                  },
-                ),
+                          ),
+                      );
+                },
               ),
               const SizedBox(
                 height: 24.0,

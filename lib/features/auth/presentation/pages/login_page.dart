@@ -55,23 +55,23 @@ class LoginPage extends StatelessWidget {
               SizedBox(
                 height: MediaQuery.of(context).size.height * .15,
               ),
-              Hero(
-                tag: 'AuthButton',
-                child: BlocBuilder<LoginBloc, LoginState>(
-                  buildWhen: (p, c) => p.isLoading != c.isLoading,
-                  builder: (context, state) {
-                    return state.isLoading
-                        ? const Center(
-                            child: CupertinoActivityIndicator(),
-                          )
-                        : ElevatedButton(
+              BlocBuilder<LoginBloc, LoginState>(
+                buildWhen: (p, c) => p.isLoading != c.isLoading,
+                builder: (context, state) {
+                  return state.isLoading
+                      ? const Center(
+                          child: CupertinoActivityIndicator(),
+                        )
+                      : Hero(
+                          tag: 'AuthButton',
+                          child: ElevatedButton(
                             onPressed: () => context.read<LoginBloc>().add(
                                   const LoginEvent.loginRequested(),
                                 ),
                             child: const Text('Sign in'),
-                          );
-                  },
-                ),
+                          ),
+                        );
+                },
               ),
               const SizedBox(
                 height: 24.0,
