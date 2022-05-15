@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:pharmaklik/core/app/app_bloc/app_bloc.dart';
 import 'package:pharmaklik/core/database/dao/user_dao.dart';
 import 'package:pharmaklik/core/helpers/shared_preferences_helper.dart';
 import 'package:pharmaklik/features/auth/data/data_source/i_auth_data_source.dart';
@@ -24,4 +25,5 @@ Future<void> inject() async {
   sl.registerLazySingleton(() => Register(sl()));
   sl.registerFactory(() => LoginBloc(sl()));
   sl.registerFactory(() => RegisterBloc(sl()));
+  sl.registerFactory(() => AppBloc(sl()));
 }

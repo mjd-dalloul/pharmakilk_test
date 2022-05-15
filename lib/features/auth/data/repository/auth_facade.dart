@@ -17,7 +17,7 @@ class AuthFacade implements IAuthFacade {
   );
 
   @override
-  Future<bool> isAuthenticated() async {
+  bool isAuthenticated() {
     return sharedPreferencesHelper.getBool(AppConstant.authenticated);
   }
 

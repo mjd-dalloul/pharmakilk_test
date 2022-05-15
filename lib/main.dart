@@ -8,6 +8,6 @@ void main() async {
     widgetsBinding: WidgetsFlutterBinding.ensureInitialized(),
   );
   await inject();
-  runApp(const MyApp());
+  runApp(const AppProvider());
   FlutterNativeSplash.remove();
 }

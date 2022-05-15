@@ -9,5 +9,5 @@ abstract class IAuthFacade {
   Future<Either<Failure, Unit>> loginWithEmailAndPassword(
       LoginModel loginModel);
 
-  Future<bool> isAuthenticated();
+  bool isAuthenticated();
 }
