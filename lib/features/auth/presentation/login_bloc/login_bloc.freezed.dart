@@ -20,21 +20,21 @@ mixin _$LoginEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(String value) emailChanged,
     required TResult Function(String value) passwordChanged,
-    required TResult Function() loginRequested,
+    required TResult Function(bool validForm) loginRequested,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String value)? emailChanged,
     TResult Function(String value)? passwordChanged,
-    TResult Function()? loginRequested,
+    TResult Function(bool validForm)? loginRequested,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String value)? emailChanged,
     TResult Function(String value)? passwordChanged,
-    TResult Function()? loginRequested,
+    TResult Function(bool validForm)? loginRequested,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -144,7 +144,7 @@ class _$EmailChanged implements EmailChanged {
   TResult when<TResult extends Object?>({
     required TResult Function(String value) emailChanged,
     required TResult Function(String value) passwordChanged,
-    required TResult Function() loginRequested,
+    required TResult Function(bool validForm) loginRequested,
   }) {
     return emailChanged(value);
   }
@@ -154,7 +154,7 @@ class _$EmailChanged implements EmailChanged {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String value)? emailChanged,
     TResult Function(String value)? passwordChanged,
-    TResult Function()? loginRequested,
+    TResult Function(bool validForm)? loginRequested,
   }) {
     return emailChanged?.call(value);
   }
@@ -164,7 +164,7 @@ class _$EmailChanged implements EmailChanged {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String value)? emailChanged,
     TResult Function(String value)? passwordChanged,
-    TResult Function()? loginRequested,
+    TResult Function(bool validForm)? loginRequested,
     required TResult orElse(),
   }) {
     if (emailChanged != null) {
@@ -284,7 +284,7 @@ class _$PasswordChanged implements PasswordChanged {
   TResult when<TResult extends Object?>({
     required TResult Function(String value) emailChanged,
     required TResult Function(String value) passwordChanged,
-    required TResult Function() loginRequested,
+    required TResult Function(bool validForm) loginRequested,
   }) {
     return passwordChanged(value);
   }
@@ -294,7 +294,7 @@ class _$PasswordChanged implements PasswordChanged {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String value)? emailChanged,
     TResult Function(String value)? passwordChanged,
-    TResult Function()? loginRequested,
+    TResult Function(bool validForm)? loginRequested,
   }) {
     return passwordChanged?.call(value);
   }
@@ -304,7 +304,7 @@ class _$PasswordChanged implements PasswordChanged {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String value)? emailChanged,
     TResult Function(String value)? passwordChanged,
-    TResult Function()? loginRequested,
+    TResult Function(bool validForm)? loginRequested,
     required TResult orElse(),
   }) {
     if (passwordChanged != null) {
@@ -362,6 +362,7 @@ abstract class _$$LoginRequestedCopyWith<$Res> {
   factory _$$LoginRequestedCopyWith(
           _$LoginRequested value, $Res Function(_$LoginRequested) then) =
       __$$LoginRequestedCopyWithImpl<$Res>;
+  $Res call({bool validForm});
 }
 
 /// @nodoc
@@ -374,35 +375,58 @@ class __$$LoginRequestedCopyWithImpl<$Res>
 
   @override
   _$LoginRequested get _value => super._value as _$LoginRequested;
+
+  @override
+  $Res call({
+    Object? validForm = freezed,
+  }) {
+    return _then(_$LoginRequested(
+      validForm == freezed
+          ? _value.validForm
+          : validForm // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$LoginRequested implements LoginRequested {
-  const _$LoginRequested();
+  const _$LoginRequested(this.validForm);
+
+  @override
+  final bool validForm;
 
   @override
   String toString() {
-    return 'LoginEvent.loginRequested()';
+    return 'LoginEvent.loginRequested(validForm: $validForm)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoginRequested);
+        (other.runtimeType == runtimeType &&
+            other is _$LoginRequested &&
+            const DeepCollectionEquality().equals(other.validForm, validForm));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(validForm));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$LoginRequestedCopyWith<_$LoginRequested> get copyWith =>
+      __$$LoginRequestedCopyWithImpl<_$LoginRequested>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String value) emailChanged,
     required TResult Function(String value) passwordChanged,
-    required TResult Function() loginRequested,
+    required TResult Function(bool validForm) loginRequested,
   }) {
-    return loginRequested();
+    return loginRequested(validForm);
   }
 
   @override
@@ -410,9 +434,9 @@ class _$LoginRequested implements LoginRequested {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String value)? emailChanged,
     TResult Function(String value)? passwordChanged,
-    TResult Function()? loginRequested,
+    TResult Function(bool validForm)? loginRequested,
   }) {
-    return loginRequested?.call();
+    return loginRequested?.call(validForm);
   }
 
   @override
@@ -420,11 +444,11 @@ class _$LoginRequested implements LoginRequested {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String value)? emailChanged,
     TResult Function(String value)? passwordChanged,
-    TResult Function()? loginRequested,
+    TResult Function(bool validForm)? loginRequested,
     required TResult orElse(),
   }) {
     if (loginRequested != null) {
-      return loginRequested();
+      return loginRequested(validForm);
     }
     return orElse();
   }
@@ -465,7 +489,12 @@ class _$LoginRequested implements LoginRequested {
 }
 
 abstract class LoginRequested implements LoginEvent {
-  const factory LoginRequested() = _$LoginRequested;
+  const factory LoginRequested(final bool validForm) = _$LoginRequested;
+
+  bool get validForm => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$$LoginRequestedCopyWith<_$LoginRequested> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc

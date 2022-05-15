@@ -1,9 +1,10 @@
-import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmaklik/core/app/app_bloc/app_bloc.dart';
 import 'package:pharmaklik/core/helpers/failrue_resolver.dart';
+import 'package:pharmaklik/core/validator/base_validator.dart';
+import 'package:pharmaklik/features/auth/domain/business_rules/auth_business_rules.dart';
 import 'package:pharmaklik/features/auth/presentation/login_bloc/login_bloc.dart';
 import 'package:pharmaklik/features/auth/presentation/pages/signup_page.dart';
 import 'package:pharmaklik/features/auth/presentation/pages/widgets.dart';
@@ -54,27 +55,6 @@ class LoginPage extends StatelessWidget {
                 height: 35,
               ),
               const LoginForm(),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * .15,
-              ),
-              BlocBuilder<LoginBloc, LoginState>(
-                buildWhen: (p, c) => p.isLoading != c.isLoading,
-                builder: (context, state) {
-                  return state.isLoading
-                      ? const Center(
-                          child: CupertinoActivityIndicator(),
-                        )
-                      : Hero(
-                          tag: 'AuthButton',
-                          child: ElevatedButton(
-                            onPressed: () => context.read<LoginBloc>().add(
-                                  const LoginEvent.loginRequested(),
-                                ),
-                            child: const Text('Sign in'),
-                          ),
-                        );
-                },
-              ),
               const SizedBox(
                 height: 24.0,
               ),
@@ -112,7 +92,8 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  bool showPassword = false;
+  bool showPassword = true;
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -120,6 +101,7 @@ class _LoginFormState extends State<LoginForm> {
       buildWhen: (p, c) => p.showErrorMessage != c.showErrorMessage,
       builder: (context, state) {
         return Form(
+          key: formKey,
           autovalidateMode: state.showErrorMessage
               ? AutovalidateMode.always
               : AutovalidateMode.disabled,
@@ -132,6 +114,15 @@ class _LoginFormState extends State<LoginForm> {
                 onChanged: (value) => context
                     .read<LoginBloc>()
                     .add(LoginEvent.emailChanged(value!)),
+                validator: (_) => Validator.validateRules([StringIsEmail()],
+                        context.read<LoginBloc>().state.loginModel.email)
+                    .fold(
+                  (failure) => failure.maybeMap(
+                    invalidEmail: (_) => 'Enter Valid Email',
+                    orElse: () => null,
+                  ),
+                  (_) => null,
+                ),
               ),
               const SizedBox(
                 height: 10.0,
@@ -145,10 +136,45 @@ class _LoginFormState extends State<LoginForm> {
                 }),
                 labelText: 'Password',
                 hintText: 'Your Password',
-                obscureText: !showPassword,
+                obscureText: showPassword,
                 onChanged: (value) => context
                     .read<LoginBloc>()
                     .add(LoginEvent.passwordChanged(value!)),
+                validator: (_) => Validator.validateRules([PasswordLength()],
+                        context.read<LoginBloc>().state.loginModel.password)
+                    .fold(
+                  (failure) => failure.maybeMap(
+                    shortPassword: (_) =>
+                        'Password must be greater than 5 characters',
+                    orElse: () => null,
+                  ),
+                  (_) => null,
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .15,
+              ),
+              BlocBuilder<LoginBloc, LoginState>(
+                buildWhen: (p, c) => p.isLoading != c.isLoading,
+                builder: (context, state) {
+                  return state.isLoading
+                      ? const Center(
+                          child: CupertinoActivityIndicator(),
+                        )
+                      : Hero(
+                          tag: 'AuthButton',
+                          child: ElevatedButton(
+                            onPressed: () => context.read<LoginBloc>().add(
+                                  LoginEvent.loginRequested(
+                                    formKey.currentState == null
+                                        ? false
+                                        : formKey.currentState!.validate(),
+                                  ),
+                                ),
+                            child: const Text('Sign in'),
+                          ),
+                        );
+                },
               ),
             ],
           ),

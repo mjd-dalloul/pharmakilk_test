@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:pharmaklik/core/validator/base_validator.dart';
 import 'package:pharmaklik/features/auth/domain/inputs/login_model.dart';
 import 'package:pharmaklik/features/auth/domain/usecase/login.dart';
 
@@ -32,15 +34,21 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     ));
   }
   void _onLoginRequested(LoginRequested event, Emitter<LoginState> emit) async {
-    emit(state.copyWith(
-      isLoading: true,
-      optionOfFailureOrSuccess: none(),
-    ));
-    final res = await login(state.loginModel);
-    emit(state.copyWith(
-      isLoading: false,
-      optionOfFailureOrSuccess: optionOf(res),
-      showErrorMessage: true,
-    ));
+    if(event.validForm) {
+      emit(state.copyWith(
+        isLoading: true,
+        optionOfFailureOrSuccess: none(),
+      ));
+      final res = await login(state.loginModel);
+      emit(state.copyWith(
+        isLoading: false,
+        optionOfFailureOrSuccess: optionOf(res),
+        showErrorMessage: true,
+      ));
+    } else {
+      emit(state.copyWith(
+        showErrorMessage: true,
+      ));
+    }
   }
 }

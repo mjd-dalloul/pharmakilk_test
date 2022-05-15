@@ -4,5 +4,5 @@ part of 'login_bloc.dart';
 class LoginEvent with _$LoginEvent {
   const factory LoginEvent.emailChanged(String value) = EmailChanged;
   const factory LoginEvent.passwordChanged(String value) = PasswordChanged;
-  const factory LoginEvent.loginRequested() = LoginRequested;
+  const factory LoginEvent.loginRequested(bool validForm) = LoginRequested;
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -54,15 +55,21 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   void _onRegisterRequested(
       RegisterRequested event, Emitter<RegisterState> emit) async {
-    emit(state.copyWith(
-      isLoading: true,
-      optionOfFailureOrSuccess: none(),
-    ));
-    final res = await register(state.registerModel);
-    emit(state.copyWith(
-      isLoading: false,
-      optionOfFailureOrSuccess: optionOf(res),
-      showErrorMessage: true,
-    ));
+    if(event.validForm) {
+      emit(state.copyWith(
+        isLoading: true,
+        optionOfFailureOrSuccess: none(),
+      ));
+      final res = await register(state.registerModel);
+      emit(state.copyWith(
+        isLoading: false,
+        optionOfFailureOrSuccess: optionOf(res),
+        showErrorMessage: true,
+      ));
+    } else {
+      emit(state.copyWith(
+        showErrorMessage: true,
+      ));
+    }
   }
 }

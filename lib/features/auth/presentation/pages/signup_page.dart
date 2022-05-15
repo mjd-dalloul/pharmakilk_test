@@ -1,13 +1,14 @@
-import 'dart:developer';
-
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmaklik/core/helpers/failrue_resolver.dart';
+import 'package:pharmaklik/features/auth/domain/business_rules/auth_business_rules.dart';
 import 'package:pharmaklik/features/auth/presentation/pages/widgets.dart';
 import 'package:pharmaklik/features/auth/presentation/register_bloc/register_bloc.dart';
 import 'package:pharmaklik/injection.dart';
+
+import '../../../../core/validator/base_validator.dart';
 
 class SignupProvider extends StatelessWidget {
   const SignupProvider({Key? key}) : super(key: key);
@@ -61,26 +62,6 @@ class SignupPage extends StatelessWidget {
                 height: 35,
               ),
               const SignupForm(),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * .12,
-              ),
-              BlocBuilder<RegisterBloc, RegisterState>(
-                builder: (context, state) {
-                  return state.isLoading
-                      ? const Center(
-                          child: CupertinoActivityIndicator(),
-                        )
-                      : Hero(
-                          tag: 'AuthButton',
-                          child: ElevatedButton(
-                            onPressed: () => context.read<RegisterBloc>().add(
-                                  const RegisterEvent.registerUserRequested(),
-                                ),
-                            child: const Text('Sign up'),
-                          ),
-                        );
-                },
-              ),
               const SizedBox(
                 height: 24.0,
               ),
@@ -118,7 +99,8 @@ class SignupForm extends StatefulWidget {
 }
 
 class _SignupFormState extends State<SignupForm> {
-  bool showPassword = false;
+  bool showPassword = true;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -126,6 +108,7 @@ class _SignupFormState extends State<SignupForm> {
       buildWhen: (p, c) => p.showErrorMessage != c.showErrorMessage,
       builder: (context, state) {
         return Form(
+          key: formKey,
           autovalidateMode: state.showErrorMessage
               ? AutovalidateMode.always
               : AutovalidateMode.disabled,
@@ -138,6 +121,16 @@ class _SignupFormState extends State<SignupForm> {
                 onChanged: (value) => context.read<RegisterBloc>().add(
                       RegisterEvent.firstNameChanged(value!),
                     ),
+                validator: (_) => Validator.validateRules([
+                  RequiredField()
+                ], context.read<RegisterBloc>().state.registerModel.firstName)
+                    .fold(
+                  (failure) => failure.maybeMap(
+                    requiredField: (_) => 'Required Field',
+                    orElse: () => null,
+                  ),
+                  (_) => null,
+                ),
               ),
               const SizedBox(
                 height: 10.0,
@@ -149,6 +142,16 @@ class _SignupFormState extends State<SignupForm> {
                 onChanged: (value) => context.read<RegisterBloc>().add(
                       RegisterEvent.lastNameChanged(value!),
                     ),
+                validator: (_) => Validator.validateRules([
+                  RequiredField()
+                ], context.read<RegisterBloc>().state.registerModel.lastName)
+                    .fold(
+                  (failure) => failure.maybeMap(
+                    requiredField: (_) => 'Required Field',
+                    orElse: () => null,
+                  ),
+                  (_) => null,
+                ),
               ),
               const SizedBox(
                 height: 10.0,
@@ -160,6 +163,15 @@ class _SignupFormState extends State<SignupForm> {
                 onChanged: (value) => context.read<RegisterBloc>().add(
                       RegisterEvent.emailChanged(value!),
                     ),
+                validator: (_) => Validator.validateRules([StringIsEmail()],
+                        context.read<RegisterBloc>().state.registerModel.email)
+                    .fold(
+                  (failure) => failure.maybeMap(
+                    invalidEmail: (_) => 'Enter valid email',
+                    orElse: () => null,
+                  ),
+                  (_) => null,
+                ),
               ),
               const SizedBox(
                 height: 10.0,
@@ -173,10 +185,45 @@ class _SignupFormState extends State<SignupForm> {
                 }),
                 labelText: 'Password',
                 hintText: 'Your Password',
-                obscureText: true,
+                obscureText: showPassword,
                 onChanged: (value) => context.read<RegisterBloc>().add(
                       RegisterEvent.passwordChanged(value!),
                     ),
+                validator: (_) => Validator.validateRules([
+                  PasswordLength()
+                ], context.read<RegisterBloc>().state.registerModel.password)
+                    .fold(
+                  (failure) => failure.maybeMap(
+                    shortPassword: (_) =>
+                        'password must be greater than 5 characters',
+                    orElse: () => null,
+                  ),
+                  (_) => null,
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .12,
+              ),
+              BlocBuilder<RegisterBloc, RegisterState>(
+                builder: (context, state) {
+                  return state.isLoading
+                      ? const Center(
+                          child: CupertinoActivityIndicator(),
+                        )
+                      : Hero(
+                          tag: 'AuthButton',
+                          child: ElevatedButton(
+                            onPressed: () => context.read<RegisterBloc>().add(
+                              RegisterEvent.registerUserRequested(
+                                    formKey.currentState == null
+                                        ? false
+                                        : formKey.currentState!.validate(),
+                                  ),
+                                ),
+                            child: const Text('Sign up'),
+                          ),
+                        );
+                },
               ),
             ],
           ),

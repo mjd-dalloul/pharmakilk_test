@@ -6,5 +6,5 @@ class RegisterEvent with _$RegisterEvent {
   const factory RegisterEvent.passwordChanged(String value) = PasswordChanged;
   const factory RegisterEvent.firstNameChanged(String value) = FirstNameChanged;
   const factory RegisterEvent.lastNameChanged(String value) = LastNameChanged;
-  const factory RegisterEvent.registerUserRequested() = RegisterRequested;
+  const factory RegisterEvent.registerUserRequested(bool validForm) = RegisterRequested;
 }

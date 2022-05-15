@@ -7,6 +7,7 @@ class InputFiledWithIcon extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final void Function(String?) onChanged;
+  final String? Function(String?) validator;
 
   const InputFiledWithIcon({
     Key? key,
@@ -15,6 +16,7 @@ class InputFiledWithIcon extends StatelessWidget {
     required this.labelText,
     this.onIconPressed,
     required this.onChanged,
+    required this.validator,
     this.obscureText = false,
   }) : super(key: key);
 
@@ -34,6 +36,7 @@ class InputFiledWithIcon extends StatelessWidget {
         ),
         Expanded(
           child: TextFormField(
+            validator: validator,
             obscureText: obscureText,
             onChanged: onChanged,
             decoration: InputDecoration(

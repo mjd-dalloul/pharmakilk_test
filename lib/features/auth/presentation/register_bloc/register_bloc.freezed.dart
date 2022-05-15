@@ -22,7 +22,7 @@ mixin _$RegisterEvent {
     required TResult Function(String value) passwordChanged,
     required TResult Function(String value) firstNameChanged,
     required TResult Function(String value) lastNameChanged,
-    required TResult Function() registerUserRequested,
+    required TResult Function(bool validForm) registerUserRequested,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -31,7 +31,7 @@ mixin _$RegisterEvent {
     TResult Function(String value)? passwordChanged,
     TResult Function(String value)? firstNameChanged,
     TResult Function(String value)? lastNameChanged,
-    TResult Function()? registerUserRequested,
+    TResult Function(bool validForm)? registerUserRequested,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -40,7 +40,7 @@ mixin _$RegisterEvent {
     TResult Function(String value)? passwordChanged,
     TResult Function(String value)? firstNameChanged,
     TResult Function(String value)? lastNameChanged,
-    TResult Function()? registerUserRequested,
+    TResult Function(bool validForm)? registerUserRequested,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -160,7 +160,7 @@ class _$EmailChanged implements EmailChanged {
     required TResult Function(String value) passwordChanged,
     required TResult Function(String value) firstNameChanged,
     required TResult Function(String value) lastNameChanged,
-    required TResult Function() registerUserRequested,
+    required TResult Function(bool validForm) registerUserRequested,
   }) {
     return emailChanged(value);
   }
@@ -172,7 +172,7 @@ class _$EmailChanged implements EmailChanged {
     TResult Function(String value)? passwordChanged,
     TResult Function(String value)? firstNameChanged,
     TResult Function(String value)? lastNameChanged,
-    TResult Function()? registerUserRequested,
+    TResult Function(bool validForm)? registerUserRequested,
   }) {
     return emailChanged?.call(value);
   }
@@ -184,7 +184,7 @@ class _$EmailChanged implements EmailChanged {
     TResult Function(String value)? passwordChanged,
     TResult Function(String value)? firstNameChanged,
     TResult Function(String value)? lastNameChanged,
-    TResult Function()? registerUserRequested,
+    TResult Function(bool validForm)? registerUserRequested,
     required TResult orElse(),
   }) {
     if (emailChanged != null) {
@@ -312,7 +312,7 @@ class _$PasswordChanged implements PasswordChanged {
     required TResult Function(String value) passwordChanged,
     required TResult Function(String value) firstNameChanged,
     required TResult Function(String value) lastNameChanged,
-    required TResult Function() registerUserRequested,
+    required TResult Function(bool validForm) registerUserRequested,
   }) {
     return passwordChanged(value);
   }
@@ -324,7 +324,7 @@ class _$PasswordChanged implements PasswordChanged {
     TResult Function(String value)? passwordChanged,
     TResult Function(String value)? firstNameChanged,
     TResult Function(String value)? lastNameChanged,
-    TResult Function()? registerUserRequested,
+    TResult Function(bool validForm)? registerUserRequested,
   }) {
     return passwordChanged?.call(value);
   }
@@ -336,7 +336,7 @@ class _$PasswordChanged implements PasswordChanged {
     TResult Function(String value)? passwordChanged,
     TResult Function(String value)? firstNameChanged,
     TResult Function(String value)? lastNameChanged,
-    TResult Function()? registerUserRequested,
+    TResult Function(bool validForm)? registerUserRequested,
     required TResult orElse(),
   }) {
     if (passwordChanged != null) {
@@ -464,7 +464,7 @@ class _$FirstNameChanged implements FirstNameChanged {
     required TResult Function(String value) passwordChanged,
     required TResult Function(String value) firstNameChanged,
     required TResult Function(String value) lastNameChanged,
-    required TResult Function() registerUserRequested,
+    required TResult Function(bool validForm) registerUserRequested,
   }) {
     return firstNameChanged(value);
   }
@@ -476,7 +476,7 @@ class _$FirstNameChanged implements FirstNameChanged {
     TResult Function(String value)? passwordChanged,
     TResult Function(String value)? firstNameChanged,
     TResult Function(String value)? lastNameChanged,
-    TResult Function()? registerUserRequested,
+    TResult Function(bool validForm)? registerUserRequested,
   }) {
     return firstNameChanged?.call(value);
   }
@@ -488,7 +488,7 @@ class _$FirstNameChanged implements FirstNameChanged {
     TResult Function(String value)? passwordChanged,
     TResult Function(String value)? firstNameChanged,
     TResult Function(String value)? lastNameChanged,
-    TResult Function()? registerUserRequested,
+    TResult Function(bool validForm)? registerUserRequested,
     required TResult orElse(),
   }) {
     if (firstNameChanged != null) {
@@ -616,7 +616,7 @@ class _$LastNameChanged implements LastNameChanged {
     required TResult Function(String value) passwordChanged,
     required TResult Function(String value) firstNameChanged,
     required TResult Function(String value) lastNameChanged,
-    required TResult Function() registerUserRequested,
+    required TResult Function(bool validForm) registerUserRequested,
   }) {
     return lastNameChanged(value);
   }
@@ -628,7 +628,7 @@ class _$LastNameChanged implements LastNameChanged {
     TResult Function(String value)? passwordChanged,
     TResult Function(String value)? firstNameChanged,
     TResult Function(String value)? lastNameChanged,
-    TResult Function()? registerUserRequested,
+    TResult Function(bool validForm)? registerUserRequested,
   }) {
     return lastNameChanged?.call(value);
   }
@@ -640,7 +640,7 @@ class _$LastNameChanged implements LastNameChanged {
     TResult Function(String value)? passwordChanged,
     TResult Function(String value)? firstNameChanged,
     TResult Function(String value)? lastNameChanged,
-    TResult Function()? registerUserRequested,
+    TResult Function(bool validForm)? registerUserRequested,
     required TResult orElse(),
   }) {
     if (lastNameChanged != null) {
@@ -704,6 +704,7 @@ abstract class _$$RegisterRequestedCopyWith<$Res> {
   factory _$$RegisterRequestedCopyWith(
           _$RegisterRequested value, $Res Function(_$RegisterRequested) then) =
       __$$RegisterRequestedCopyWithImpl<$Res>;
+  $Res call({bool validForm});
 }
 
 /// @nodoc
@@ -716,26 +717,49 @@ class __$$RegisterRequestedCopyWithImpl<$Res>
 
   @override
   _$RegisterRequested get _value => super._value as _$RegisterRequested;
+
+  @override
+  $Res call({
+    Object? validForm = freezed,
+  }) {
+    return _then(_$RegisterRequested(
+      validForm == freezed
+          ? _value.validForm
+          : validForm // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$RegisterRequested implements RegisterRequested {
-  const _$RegisterRequested();
+  const _$RegisterRequested(this.validForm);
+
+  @override
+  final bool validForm;
 
   @override
   String toString() {
-    return 'RegisterEvent.registerUserRequested()';
+    return 'RegisterEvent.registerUserRequested(validForm: $validForm)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$RegisterRequested);
+        (other.runtimeType == runtimeType &&
+            other is _$RegisterRequested &&
+            const DeepCollectionEquality().equals(other.validForm, validForm));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(validForm));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$RegisterRequestedCopyWith<_$RegisterRequested> get copyWith =>
+      __$$RegisterRequestedCopyWithImpl<_$RegisterRequested>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -744,9 +768,9 @@ class _$RegisterRequested implements RegisterRequested {
     required TResult Function(String value) passwordChanged,
     required TResult Function(String value) firstNameChanged,
     required TResult Function(String value) lastNameChanged,
-    required TResult Function() registerUserRequested,
+    required TResult Function(bool validForm) registerUserRequested,
   }) {
-    return registerUserRequested();
+    return registerUserRequested(validForm);
   }
 
   @override
@@ -756,9 +780,9 @@ class _$RegisterRequested implements RegisterRequested {
     TResult Function(String value)? passwordChanged,
     TResult Function(String value)? firstNameChanged,
     TResult Function(String value)? lastNameChanged,
-    TResult Function()? registerUserRequested,
+    TResult Function(bool validForm)? registerUserRequested,
   }) {
-    return registerUserRequested?.call();
+    return registerUserRequested?.call(validForm);
   }
 
   @override
@@ -768,11 +792,11 @@ class _$RegisterRequested implements RegisterRequested {
     TResult Function(String value)? passwordChanged,
     TResult Function(String value)? firstNameChanged,
     TResult Function(String value)? lastNameChanged,
-    TResult Function()? registerUserRequested,
+    TResult Function(bool validForm)? registerUserRequested,
     required TResult orElse(),
   }) {
     if (registerUserRequested != null) {
-      return registerUserRequested();
+      return registerUserRequested(validForm);
     }
     return orElse();
   }
@@ -819,7 +843,12 @@ class _$RegisterRequested implements RegisterRequested {
 }
 
 abstract class RegisterRequested implements RegisterEvent {
-  const factory RegisterRequested() = _$RegisterRequested;
+  const factory RegisterRequested(final bool validForm) = _$RegisterRequested;
+
+  bool get validForm => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$$RegisterRequestedCopyWith<_$RegisterRequested> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
