@@ -19,16 +19,19 @@ mixin _$AppEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() authenticateCheckRequested,
+    required TResult Function() logoutRequested,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? authenticateCheckRequested,
+    TResult Function()? logoutRequested,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? authenticateCheckRequested,
+    TResult Function()? logoutRequested,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -36,18 +39,21 @@ mixin _$AppEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(AuthenticateCheckRequested value)
         authenticateCheckRequested,
+    required TResult Function(LogoutRequested value) logoutRequested,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(AuthenticateCheckRequested value)?
         authenticateCheckRequested,
+    TResult Function(LogoutRequested value)? logoutRequested,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(AuthenticateCheckRequested value)?
         authenticateCheckRequested,
+    TResult Function(LogoutRequested value)? logoutRequested,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -114,6 +120,7 @@ class _$AuthenticateCheckRequested implements AuthenticateCheckRequested {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() authenticateCheckRequested,
+    required TResult Function() logoutRequested,
   }) {
     return authenticateCheckRequested();
   }
@@ -122,6 +129,7 @@ class _$AuthenticateCheckRequested implements AuthenticateCheckRequested {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? authenticateCheckRequested,
+    TResult Function()? logoutRequested,
   }) {
     return authenticateCheckRequested?.call();
   }
@@ -130,6 +138,7 @@ class _$AuthenticateCheckRequested implements AuthenticateCheckRequested {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? authenticateCheckRequested,
+    TResult Function()? logoutRequested,
     required TResult orElse(),
   }) {
     if (authenticateCheckRequested != null) {
@@ -143,6 +152,7 @@ class _$AuthenticateCheckRequested implements AuthenticateCheckRequested {
   TResult map<TResult extends Object?>({
     required TResult Function(AuthenticateCheckRequested value)
         authenticateCheckRequested,
+    required TResult Function(LogoutRequested value) logoutRequested,
   }) {
     return authenticateCheckRequested(this);
   }
@@ -152,6 +162,7 @@ class _$AuthenticateCheckRequested implements AuthenticateCheckRequested {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(AuthenticateCheckRequested value)?
         authenticateCheckRequested,
+    TResult Function(LogoutRequested value)? logoutRequested,
   }) {
     return authenticateCheckRequested?.call(this);
   }
@@ -161,6 +172,7 @@ class _$AuthenticateCheckRequested implements AuthenticateCheckRequested {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(AuthenticateCheckRequested value)?
         authenticateCheckRequested,
+    TResult Function(LogoutRequested value)? logoutRequested,
     required TResult orElse(),
   }) {
     if (authenticateCheckRequested != null) {
@@ -172,6 +184,113 @@ class _$AuthenticateCheckRequested implements AuthenticateCheckRequested {
 
 abstract class AuthenticateCheckRequested implements AppEvent {
   const factory AuthenticateCheckRequested() = _$AuthenticateCheckRequested;
+}
+
+/// @nodoc
+abstract class _$$LogoutRequestedCopyWith<$Res> {
+  factory _$$LogoutRequestedCopyWith(
+          _$LogoutRequested value, $Res Function(_$LogoutRequested) then) =
+      __$$LogoutRequestedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$LogoutRequestedCopyWithImpl<$Res> extends _$AppEventCopyWithImpl<$Res>
+    implements _$$LogoutRequestedCopyWith<$Res> {
+  __$$LogoutRequestedCopyWithImpl(
+      _$LogoutRequested _value, $Res Function(_$LogoutRequested) _then)
+      : super(_value, (v) => _then(v as _$LogoutRequested));
+
+  @override
+  _$LogoutRequested get _value => super._value as _$LogoutRequested;
+}
+
+/// @nodoc
+
+class _$LogoutRequested implements LogoutRequested {
+  const _$LogoutRequested();
+
+  @override
+  String toString() {
+    return 'AppEvent.logoutRequested()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$LogoutRequested);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() authenticateCheckRequested,
+    required TResult Function() logoutRequested,
+  }) {
+    return logoutRequested();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? authenticateCheckRequested,
+    TResult Function()? logoutRequested,
+  }) {
+    return logoutRequested?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? authenticateCheckRequested,
+    TResult Function()? logoutRequested,
+    required TResult orElse(),
+  }) {
+    if (logoutRequested != null) {
+      return logoutRequested();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(AuthenticateCheckRequested value)
+        authenticateCheckRequested,
+    required TResult Function(LogoutRequested value) logoutRequested,
+  }) {
+    return logoutRequested(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(AuthenticateCheckRequested value)?
+        authenticateCheckRequested,
+    TResult Function(LogoutRequested value)? logoutRequested,
+  }) {
+    return logoutRequested?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(AuthenticateCheckRequested value)?
+        authenticateCheckRequested,
+    TResult Function(LogoutRequested value)? logoutRequested,
+    required TResult orElse(),
+  }) {
+    if (logoutRequested != null) {
+      return logoutRequested(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class LogoutRequested implements AppEvent {
+  const factory LogoutRequested() = _$LogoutRequested;
 }
 
 /// @nodoc

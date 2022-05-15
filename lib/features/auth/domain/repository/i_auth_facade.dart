@@ -10,4 +10,6 @@ abstract class IAuthFacade {
       LoginModel loginModel);
 
   bool isAuthenticated();
+
+  Future<void> logout();
 }

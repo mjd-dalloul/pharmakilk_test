@@ -1,4 +1,3 @@
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pharmaklik/features/auth/domain/repository/i_auth_facade.dart';
@@ -11,10 +10,19 @@ part 'app_bloc.freezed.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
   final IAuthFacade authFacade;
-  AppBloc(this.authFacade) : super(AppState.initial()){
+
+  AppBloc(this.authFacade) : super(AppState.initial()) {
     on<AuthenticateCheckRequested>(_onAuthenticateCheckRequested);
+    on<LogoutRequested>(_onLogoutRequested);
   }
-  void _onAuthenticateCheckRequested(AuthenticateCheckRequested event, Emitter<AppState> emit) {
+
+  void _onLogoutRequested(LogoutRequested event, Emitter<AppState> emit) async {
+    await authFacade.logout();
+    add(const AppEvent.authenticateCheckRequested());
+  }
+
+  void _onAuthenticateCheckRequested(
+      AuthenticateCheckRequested event, Emitter<AppState> emit) {
     emit(state.copyWith(
       isAuthenticated: authFacade.isAuthenticated(),
     ));

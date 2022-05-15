@@ -145,7 +145,7 @@ class _LoginFormState extends State<LoginForm> {
                 }),
                 labelText: 'Password',
                 hintText: 'Your Password',
-                obscureText: showPassword,
+                obscureText: !showPassword,
                 onChanged: (value) => context
                     .read<LoginBloc>()
                     .add(LoginEvent.passwordChanged(value!)),

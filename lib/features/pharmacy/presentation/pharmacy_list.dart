@@ -1,5 +1,7 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharmaklik/core/app/app_bloc/app_bloc.dart';
 import 'package:pharmaklik/features/pharmacy/domain/models/pharmacy.dart';
 import 'package:pharmaklik/features/pharmacy/presentation/pharmacy_info.dart';
 
@@ -17,7 +19,9 @@ class PharmacyList extends StatelessWidget {
           Align(
             alignment: Alignment.centerRight,
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                context.read<AppBloc>().add(const AppEvent.logoutRequested());
+              },
               icon: const Icon(Icons.exit_to_app),
             ),
           ),

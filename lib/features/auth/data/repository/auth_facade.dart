@@ -38,10 +38,16 @@ class AuthFacade implements IAuthFacade {
       RegisterModel registerModel) async {
     try {
       final ret = (await localDataSource.registerUser(registerModel));
-      sharedPreferencesHelper.saveBool(AppConstant.authenticated, true);
+      await sharedPreferencesHelper.saveBool(AppConstant.authenticated, true);
       return right(ret);
     } on Failure catch (e) {
       return left(e);
     }
+  }
+
+  @override
+  Future<void> logout() async {
+    (await sharedPreferencesHelper.saveBool(AppConstant.authenticated, false));
+    return;
   }
 }
