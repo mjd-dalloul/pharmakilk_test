@@ -71,14 +71,14 @@ class SignupPage extends StatelessWidget {
                           child: CupertinoActivityIndicator(),
                         )
                       : Hero(
-                    tag: 'AuthButton',
-                        child: ElevatedButton(
+                          tag: 'AuthButton',
+                          child: ElevatedButton(
                             onPressed: () => context.read<RegisterBloc>().add(
                                   const RegisterEvent.registerUserRequested(),
                                 ),
                             child: const Text('Sign up'),
                           ),
-                      );
+                        );
                 },
               ),
               const SizedBox(

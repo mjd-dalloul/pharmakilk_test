@@ -53,7 +53,6 @@ class UserDao {
       String email, String password) async {
     final res = await _db.query(
       UserTable.tableName,
-      columns: [UserTable.firstNameColumn, UserTable.lastNameColumn],
       where: '${UserTable.emailColumn} = ? AND ${UserTable.passwordColumn} = ?',
       whereArgs: [email, password],
     );

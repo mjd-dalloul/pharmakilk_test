@@ -35,6 +35,7 @@ class InputFiledWithIcon extends StatelessWidget {
         Expanded(
           child: TextFormField(
             obscureText: obscureText,
+            onChanged: onChanged,
             decoration: InputDecoration(
               labelText: labelText,
               hintText: hintText,
