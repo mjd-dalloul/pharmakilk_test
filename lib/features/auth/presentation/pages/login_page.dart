@@ -1,14 +1,22 @@
+import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharmaklik/core/helpers/failrue_resolver.dart';
+import 'package:pharmaklik/features/auth/presentation/login_bloc/login_bloc.dart';
 import 'package:pharmaklik/features/auth/presentation/pages/signup_page.dart';
 import 'package:pharmaklik/features/auth/presentation/pages/widgets.dart';
+import 'package:pharmaklik/injection.dart';
 
 class LoginPageProvider extends StatelessWidget {
   const LoginPageProvider({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return BlocProvider<LoginBloc>(
+      create: (_) => sl<LoginBloc>(),
+      child: const LoginPage(),
+    );
   }
 }
 
@@ -17,53 +25,77 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GestureDetector(
-        onTap: () => FocusManager.instance.primaryFocus!.unfocus(),
-        child: ListView(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          children: [
-            const SizedBox(
-              height: 100,
-            ),
-            Hero(
-                tag: 'pharmaklik', child: Image.asset('assets/pharmaklik.png')),
-            const SizedBox(
-              height: 35,
-            ),
-            const LoginForm(),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * .15,
-            ),
-            Hero(
-              tag: 'AuthButton',
-              child: ElevatedButton(
-                onPressed: () {},
-                child: const Text('Sign in'),
+    return BlocListener<LoginBloc, LoginState>(
+      listener: (context, state) => state.optionOfFailureOrSuccess.fold(() {
+        //ignore
+      },
+          (failureOrSuccess) => failureOrSuccess.fold(
+                  (failure) => FailureResolver.resolveFailure(
+                      failure: failure, context: context), (_) {
+                FlushbarHelper.createSuccess(message: 'Welcome back !')
+                    .show(context);
+              })),
+      child: Scaffold(
+        body: GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus!.unfocus(),
+          child: ListView(
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            children: [
+              const SizedBox(
+                height: 100,
               ),
-            ),
-            const SizedBox(
-              height: 24.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('Don\'t have an account?'),
-                GestureDetector(
-                  onTap: () => Navigator.of(context).push(
-                    CupertinoPageRoute(builder: (_) => const SignupPage()),
-                  ),
-                  child: Text(
-                    'Sign up',
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.bold),
-                  ),
+              Hero(
+                  tag: 'pharmaklik',
+                  child: Image.asset('assets/pharmaklik.png')),
+              const SizedBox(
+                height: 35,
+              ),
+              const LoginForm(),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .15,
+              ),
+              Hero(
+                tag: 'AuthButton',
+                child: BlocBuilder<LoginBloc, LoginState>(
+                  buildWhen: (p, c) => p.isLoading != c.isLoading,
+                  builder: (context, state) {
+                    return state.isLoading
+                        ? const Center(
+                            child: CupertinoActivityIndicator(),
+                          )
+                        : ElevatedButton(
+                            onPressed: () => context.read<LoginBloc>().add(
+                                  const LoginEvent.loginRequested(),
+                                ),
+                            child: const Text('Sign in'),
+                          );
+                  },
                 ),
-              ],
-            )
-          ],
+              ),
+              const SizedBox(
+                height: 24.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Don\'t have an account?'),
+                  GestureDetector(
+                    onTap: () => Navigator.of(context).push(
+                      CupertinoPageRoute(
+                          builder: (_) => const SignupProvider()),
+                    ),
+                    child: Text(
+                      'Sign up',
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -82,31 +114,44 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      child: Column(
-        children: [
-          InputFiledWithIcon(
-            iconButton:Icons.email_outlined,
-            labelText: 'Email',
-            hintText: 'Your Email',
-            onChanged: (_) {},
+    return BlocBuilder<LoginBloc, LoginState>(
+      buildWhen: (p, c) => p.showErrorMessage != c.showErrorMessage,
+      builder: (context, state) {
+        return Form(
+          autovalidateMode: state.showErrorMessage
+              ? AutovalidateMode.always
+              : AutovalidateMode.disabled,
+          child: Column(
+            children: [
+              InputFiledWithIcon(
+                iconButton: Icons.email_outlined,
+                labelText: 'Email',
+                hintText: 'Your Email',
+                onChanged: (value) => context
+                    .read<LoginBloc>()
+                    .add(LoginEvent.emailChanged(value!)),
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              InputFiledWithIcon(
+                iconButton: showPassword
+                    ? Icons.lock_outline
+                    : Icons.lock_open_outlined,
+                onIconPressed: () => setState(() {
+                  showPassword = !showPassword;
+                }),
+                labelText: 'Password',
+                hintText: 'Your Password',
+                obscureText: true,
+                onChanged: (value) => context
+                    .read<LoginBloc>()
+                    .add(LoginEvent.emailChanged(value!)),
+              ),
+            ],
           ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          InputFiledWithIcon(
-            iconButton:
-                showPassword ? Icons.lock_outline : Icons.lock_open_outlined,
-            onIconPressed: () => setState(() {
-              showPassword = !showPassword;
-            }),
-            labelText: 'Password',
-            hintText: 'Your Password',
-            obscureText: true,
-            onChanged: (_) {},
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

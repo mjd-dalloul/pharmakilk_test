@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:pharmaklik/core/database/entities/user_table.dart';
 import 'package:pharmaklik/core/failures/failure.dart';
 import 'package:sqflite/sqflite.dart';
@@ -12,10 +14,11 @@ class UserDao {
   }
 
     Future<void> initialize() async {
-    _db = await openDatabase('${await getDatabasesPath()}${AppConstant.dataBaseName}',
+    final String databasePath = '${await getDatabasesPath()}/${AppConstant.dataBaseName}';
+    _db = await openDatabase(databasePath,
         version: 1, onCreate: (db, version) async {
       await db.execute('''
-      create table if not exist ${UserTable.tableName} (
+      create table ${UserTable.tableName} (
       ${UserTable.idColumn} integer primary key autoincrement,
       ${UserTable.firstNameColumn} text not null,
       ${UserTable.lastNameColumn} text not null,
@@ -23,6 +26,7 @@ class UserDao {
       ${UserTable.passwordColumn} text not null)
       ''');
     });
+    log('Database is ready to use $databasePath');
   }
 
   Future<UserTable> insert(UserTable userTable) async {
